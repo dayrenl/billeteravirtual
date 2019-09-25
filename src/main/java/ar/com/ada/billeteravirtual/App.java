@@ -123,6 +123,10 @@ public class App {
             Billetera b = new Billetera();
             b.setPersona(p);
 
+            Cuenta c = new Cuenta();
+            c.setMoneda("ARS");
+            b.agregarCuenta(c);
+
 
             ABMPersona.create(p);
         

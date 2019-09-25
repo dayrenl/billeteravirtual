@@ -28,6 +28,10 @@ public class Billetera {
         this.persona.setBilletera(this);
 	}
 
+    public void agregarCuenta(Cuenta c) {
+        c.setBilletera(this);
+        this.cuentas.add(c);
+    }
 
 
 }
