@@ -2,11 +2,25 @@ package ar.com.ada.billeteravirtual;
 
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
 /**
  * Movimiento
  */
-public class Movimiento {
+@Entity
+@Table(name = "movimiento")
 
+public class Movimiento {
+    @Id
+    @Column(name = "idmovimiento")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Date fechaMovimiento;
     private float ubicacion;
     private boolean tipoOperacion;
@@ -14,6 +28,12 @@ public class Movimiento {
     private String detalle;
     private String estado;
     private int movimientoId;
+
+  //  @ManyToOne 
+  //  @JoinColumn (name = "idcuenta", referencedColumnName = "idcuenta")
+  //  private Cuenta cuenta;
+
+    
 
 
     public Movimiento(Date fechaMovimiento, float ubicacion, boolean tipoOperacion, String conceptoOperacion,

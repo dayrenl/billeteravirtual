@@ -2,6 +2,7 @@ package ar.com.ada.billeteravirtual;
 
 import javax.persistence.*;
 
+
 /** 
  * Persona
  */
@@ -18,8 +19,11 @@ public class Persona {
     private int edad;
     private String email;
 
-    @OneToOne( mappedBy = "persona", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "persona", cascade = CascadeType.ALL)
     private Usuario usuario;
+
+    @OneToOne (mappedBy = "persona", cascade = CascadeType.ALL) 
+    private Billetera billetera;
 
     public Persona(String nombre, String dni, int edad, String email) {
         this.nombre = nombre;
@@ -59,7 +63,10 @@ public class Persona {
         return edad;
     }
 
-    public void setEdad(int edad) {
+    public void setEdad(int edad) throws Exception {
+        if (edad < 18) {
+         throw new Exception();
+        }
         this.edad = edad;
     }
 
@@ -89,4 +96,10 @@ public class Persona {
     public Usuario getUsuario() {
         return usuario;
     }
+
+    public void setBilletera(Billetera billetera) {
+        this.billetera = billetera;
+    }
+
+
 }

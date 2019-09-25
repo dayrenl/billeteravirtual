@@ -9,6 +9,6 @@ public class PersonaEdadExcepcion extends PersonaInfoExcepcion {
 
     public PersonaEdadExcepcion(Persona p, String mensaje) {
         super(p, mensaje);
-        // TODO Auto-generated constructor stub
+ 
     }
 }

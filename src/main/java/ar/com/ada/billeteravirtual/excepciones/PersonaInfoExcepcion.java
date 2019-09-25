@@ -5,12 +5,12 @@ import ar.com.ada.billeteravirtual.Persona;
 /**
  * PersonaInfoExcepcion
  */
-public class PersonaInfoExcepcion {
+public class PersonaInfoExcepcion extends Exception {
 
     private Persona persona;
     public PersonaInfoExcepcion(Persona p, String mensaje) {
         
-        super();
+        super(mensaje);
         this.persona = p;
     }
 }

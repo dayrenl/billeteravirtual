@@ -11,6 +11,7 @@ public class App {
 
     public static PersonaManager ABMPersona = new PersonaManager();
     public static UsuarioManager ABMUsuario = new UsuarioManager();
+    public static BilleteraManager ABMBilletera = new BilleteraManager();
 
     public static void main(String[] args) throws Exception {
         
@@ -72,28 +73,27 @@ public class App {
     }
     }
 
-    public static void alta() {
+    public static void alta() throws Exception {
         Persona p = new Persona();
         System.out.println("Ingrese el nombre:");
         p.setNombre(Teclado.nextLine());
         System.out.println("Ingrese el DNI:");
         p.setDni(Teclado.nextLine());
+        try {
         System.out.println("Ingrese la edad:");
         p.setEdad(Teclado.nextInt());
-        Teclado.nextLine();
+        Teclado.nextLine(); }
+        catch (Exception exedad) {
+            System.out.println("El usuario debe ser mayor a 18");
+            throw exedad;
+        }
         System.out.println("Ingrese el Email:");
         p.setEmail(Teclado.nextLine());
 
-        ABMPersona.create(p);
-        
         System.out.println("Persona generada con exito.  " + p);
-        System.out.println("Si desea crear un usuario, presione 6");
+        System.out.println("Ahora proporcione la informacion de usuario.");
 
 
-        System.out.println("Si no desea crear un usuario, presione cualquier numero");
-        int crearUsuario = Teclado.nextInt();
-        Teclado.nextLine();
-        if (crearUsuario == 6) {
             Usuario u = new Usuario();
 
             System.out.println("Escoja su username");
@@ -119,9 +119,16 @@ public class App {
 
             u.setPassword(passwordEncriptada);
             u.setEmail(p.getEmail());
-            ABMUsuario.create(u);
-        }
-    }
+
+            Billetera b = new Billetera();
+            b.setPersona(p);
+
+
+            ABMPersona.create(p);
+        
+            System.out.println("Se ha creado una billetera");
+}
+    
 
     public static void baja() {
         System.out.println("Ingrese el nombre:");
@@ -156,7 +163,7 @@ public class App {
         }
     }
 
-    public static void modifica() {
+    public static void modifica() throws Exception {
         // System.out.println("Ingrese el nombre de la persona a modificar:");
         // String n = Teclado.nextLine();
         System.out.println("Ingrese el ID de la persona a modificar:");
@@ -172,9 +179,14 @@ public class App {
             System.out.println("Ingrese el nuevo DNI:");
             personaEncontrada.setDni(Teclado.nextLine());
             // Teclado.nextLine();
+            try {
             System.out.println("Ingrese la nueva edad:");
             personaEncontrada.setEdad(Teclado.nextInt());
-            Teclado.nextLine();
+            Teclado.nextLine(); }
+            catch (Exception exedad) {
+                System.out.println("El usuario debe ser mayor de 18");
+                throw exedad;
+            }
 
             System.out.println("Ingrese el nuevo Email:");
             personaEncontrada.setEmail(Teclado.nextLine());
@@ -188,14 +200,14 @@ public class App {
 
     }
 
-    public static void modificaByDNI() {
+    public static void modificaByDNI() throws Exception {
         // System.out.println("Ingrese el nombre de la persona a modificar:");
         // String n = Teclado.nextLine();
         System.out.println("Ingrese el DNI de la persona a modificar:");
         String dni = Teclado.nextLine();
         Persona personaEncontrada = ABMPersona.readByDNI(dni);
 
-        if (personaEncontrada != null) {
+        if (personaEncontrada != null){
 
             System.out.println(personaEncontrada.toString() + "seleccionado para modificacion.");
             System.out.println("Ingrese el nuevo nombre:");
@@ -203,10 +215,14 @@ public class App {
             System.out.println("Ingrese el nuevo DNI:");
             personaEncontrada.setDni(Teclado.nextLine());
             // Teclado.nextLine();
+            try {
             System.out.println("Ingrese la nueva edad:");
             personaEncontrada.setEdad(Teclado.nextInt());
-            Teclado.nextLine();
-
+            Teclado.nextLine(); }
+            catch (Exception exedad) {
+                System.out.println("El usuario debe ser mayor a 18");
+                throw exedad;
+            }
             System.out.println("Ingrese el nuevo Email:");
             personaEncontrada.setEmail(Teclado.nextLine());
 
