@@ -12,13 +12,15 @@ public class App {
     public static PersonaManager ABMPersona = new PersonaManager();
     public static UsuarioManager ABMUsuario = new UsuarioManager();
     public static BilleteraManager ABMBilletera = new BilleteraManager();
-
+    public static CuentaManager ABMCuenta = new CuentaManager();
     public static void main(String[] args) throws Exception {
         
         try {
         
         ABMPersona.setup();
         ABMUsuario.setup();
+        ABMBilletera.setup();
+        ABMCuenta.setup();
         printOpciones();
 
         int opcion = Teclado.nextInt();
@@ -120,6 +122,10 @@ public class App {
             u.setPassword(passwordEncriptada);
             u.setEmail(p.getEmail());
 
+            p.setUsuario(u);
+            ABMPersona.create(p);
+        
+
             Billetera b = new Billetera();
             b.setPersona(p);
 
@@ -127,9 +133,19 @@ public class App {
             c.setMoneda("ARS");
             b.agregarCuenta(c);
 
+            ABMBilletera.create(b);
 
-            ABMPersona.create(p);
+          Movimiento m = new Movimiento();
+            System.out.println("Ingrese su importe");  
+            double importe = Teclado.nextDouble();
+            
+            b.detallesDeMovimiento(m, importe, c, u);
+            
+            c.agregarMovimiento(m);
         
+            ABMBilletera.update(b);
+
+
             System.out.println("Se ha creado una billetera");
 }
     

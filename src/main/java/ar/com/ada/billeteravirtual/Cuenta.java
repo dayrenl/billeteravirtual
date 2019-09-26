@@ -1,18 +1,8 @@
 package ar.com.ada.billeteravirtual;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * Cuenta
@@ -26,13 +16,17 @@ public class Cuenta {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idcuenta;
     private String moneda;
-    private int saldo;
-    private int saldoDisponible;
-    private int numeroCuenta;
+    private double saldo;
+    private double saldoDisponible;
+    private double numeroCuenta;
 
     @ManyToOne 
     @JoinColumn(name = "idbilletera", referencedColumnName = "idbilletera") 
     private Billetera billetera;
+
+    @OneToMany (mappedBy = "cuenta", cascade = CascadeType.ALL)
+    private List<Movimiento> movimientos = new ArrayList<Movimiento>();
+
 
     public String getMoneda() {
         return moneda;
@@ -42,27 +36,27 @@ public class Cuenta {
         this.moneda = moneda;
     }
 
-    public int getSaldo() {
+    public double getSaldo() {
         return saldo;
     }
 
-    public void setSaldo(int saldo) {
-        this.saldo = saldo;
+    public void setSaldo(double d) {
+        this.saldo = d;
     }
 
-    public int getSaldoDisponible() {
+    public double getSaldoDisponible() {
         return saldoDisponible;
     }
 
-    public void setSaldoDisponible(int saldoDisponible) {
+    public void setSaldoDisponible(double saldoDisponible) {
         this.saldoDisponible = saldoDisponible;
     }
 
-    public int getNumeroCuenta() {
+    public double getNumeroCuenta() {
         return numeroCuenta;
     }
 
-    public void setNumeroCuenta(int numeroCuenta) {
+    public void setNumeroCuenta(double numeroCuenta) {
         this.numeroCuenta = numeroCuenta;
     }
 
@@ -74,8 +68,22 @@ public class Cuenta {
         this.billetera = billetera;
     }
     
-  //  @OneToMany (mappedBy = "cuenta", cascade = CascadeType.ALL)
-   // private Movimiento movimiento;
+
+    public void agregarMovimiento(Movimiento m) {
+        m.setCuenta(this);
+        this.movimientos.add(m);
+        
+        this.setSaldo(this.getSaldo() + m.getImporte());
+        this.setSaldoDisponible(this.getSaldo());
+    }
+
+    public int getIdcuenta() {
+        return idcuenta;
+    }
+
+    public void setIdcuenta(int idcuenta) {
+        this.idcuenta = idcuenta;
+    }
 
 
 }

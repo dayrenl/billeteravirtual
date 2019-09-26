@@ -2,14 +2,7 @@ package ar.com.ada.billeteravirtual;
 
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * Movimiento
@@ -21,30 +14,39 @@ public class Movimiento {
     @Id
     @Column(name = "idmovimiento")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int idmovimiento;
     private Date fechaMovimiento;
-    private float ubicacion;
-    private boolean tipoOperacion;
+    private double importe;
+   // private float ubicacion;
+    private String tipoOperacion;
     private String conceptoOperacion;
     private String detalle;
-    private String estado;
-    private int movimientoId;
+    private int estado;
+    private int cuentaDestino;
+    private int cuentaOrigen;
+    private int deUsuario;
+    private int aUsuario;
+    
+   
 
-  //  @ManyToOne 
-  //  @JoinColumn (name = "idcuenta", referencedColumnName = "idcuenta")
-  //  private Cuenta cuenta;
+    @ManyToOne 
+    @JoinColumn (name = "idcuenta", referencedColumnName = "idcuenta")
+    private Cuenta cuenta;
 
     
 
 
-    public Movimiento(Date fechaMovimiento, float ubicacion, boolean tipoOperacion, String conceptoOperacion,
-            String detalle, String estado, int movimientoId) {
+    public Movimiento(Date fechaMovimiento, String tipoOperacion, String conceptoOperacion,
+            String detalle, int estado, int movimientoId, int cuentaDestino, int cuentaOrigen, int deUsuario, int aUsuario) {
         this.fechaMovimiento = fechaMovimiento;
-        this.ubicacion = ubicacion;
         this.tipoOperacion = tipoOperacion;
         this.conceptoOperacion = conceptoOperacion;
         this.detalle = detalle;
         this.estado = estado;
-        this.movimientoId = movimientoId;
+        this.cuentaDestino = cuentaDestino;
+        this.cuentaOrigen = cuentaOrigen;
+        this.deUsuario = deUsuario;
+        this.aUsuario = aUsuario;
     }
     
     public Movimiento() {}
@@ -53,23 +55,16 @@ public class Movimiento {
         return fechaMovimiento;
     }
 
-    public void setFechaMovimiento(Date fechaMovimiento) {
-        this.fechaMovimiento = fechaMovimiento;
+    public void setFechaMovimiento(Date i) {
+        this.fechaMovimiento = i;
     }
 
-    public float getUbicacion() {
-        return ubicacion;
-    }
 
-    public void setUbicacion(float ubicacion) {
-        this.ubicacion = ubicacion;
-    }
-
-    public boolean isTipoOperacion() {
+    public String isTipoOperacion() {
         return tipoOperacion;
     }
 
-    public void setTipoOperacion(boolean tipoOperacion) {
+    public void setTipoOperacion(String tipoOperacion) {
         this.tipoOperacion = tipoOperacion;
     }
 
@@ -87,6 +82,66 @@ public class Movimiento {
 
     public void setDetalle(String detalle) {
         this.detalle = detalle;
+    }
+
+    public void setCuenta(Cuenta cuenta) {
+        this.cuenta = cuenta;
+    }
+
+    public int getIdmovimiento() {
+        return idmovimiento;
+    }
+
+    public void setIdmovimiento(int idmovimiento) {
+        this.idmovimiento = idmovimiento;
+    }
+
+    public double getImporte() {
+        return importe;
+    }
+
+    public void setImporte(double importe) {
+        this.importe = importe;
+    }
+
+    public int getEstado() {
+        return estado;
+    }
+
+    public void setEstado(int estado) {
+        this.estado = estado;
+    }
+
+    public int getCuentaDestino() {
+        return cuentaDestino;
+    }
+
+    public void setCuentaDestino(int cuentaDestino) {
+        this.cuentaDestino = cuentaDestino;
+    }
+
+    public int getCuentaOrigen() {
+        return cuentaOrigen;
+    }
+
+    public void setCuentaOrigen(int cuentaOrigen) {
+        this.cuentaOrigen = cuentaOrigen;
+    }
+
+    public int getDeUsuario() {
+        return deUsuario;
+    }
+
+    public void setDeUsuario(int deUsuario) {
+        this.deUsuario = deUsuario;
+    }
+
+    public int getaUsuario() {
+        return aUsuario;
+    }
+
+    public void setaUsuario(int aUsuario) {
+        this.aUsuario = aUsuario;
     }
 
     
