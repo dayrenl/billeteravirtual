@@ -4,6 +4,9 @@ import java.util.*;
 
 import javax.persistence.*;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 /**
  * Cuenta
  */
@@ -25,6 +28,7 @@ public class Cuenta {
     private Billetera billetera;
 
     @OneToMany (mappedBy = "cuenta", cascade = CascadeType.ALL)
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<Movimiento> movimientos = new ArrayList<Movimiento>();
 
 

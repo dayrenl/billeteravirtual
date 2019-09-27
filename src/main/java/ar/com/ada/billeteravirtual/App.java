@@ -137,9 +137,8 @@ public class App {
 
           Movimiento m = new Movimiento();
             System.out.println("Ingrese su importe");  
-            double importe = Teclado.nextDouble();
-            
-            b.detallesDeMovimiento(m, importe, c, u);
+            double importe = Teclado.nextDouble(); 
+            b.movimientoInicial(m, importe, c, u);
             
             c.agregarMovimiento(m);
         
@@ -147,7 +146,20 @@ public class App {
 
 
             System.out.println("Se ha creado una billetera");
-}
+
+            System.out.println("Sus datos personales son " + p.toString() + ", de usuario " + u.toString() + " y de billetera " + b.toString());
+
+            System.out.println("Si desea transferir dinero, presione 6");
+            int continuar = Teclado.nextInt();
+
+            if (continuar == 6) {
+                System.out.println("Escriba el id de usuario al que desea transferir");
+                int numausuario = Teclado.nextInt();
+                System.out.println("Escriba el importe que desea transferir");
+                double dineroATransferir = Teclado.nextDouble(); 
+                transferirDinero(numausuario, dineroATransferir, u);
+            }
+        }
     
 
     public static void baja() {
@@ -285,5 +297,41 @@ public class App {
         System.out.println("Para terminar presione 0.");
         System.out.println("");
         System.out.println("=======================================");
+    }
+
+    public static void transferirDinero(int usuarioId, double importe, Usuario u) {
+    Billetera b2 = ABMBilletera.read(3);
+    Movimiento m2 = new Movimiento();
+    Billetera b3 = ABMBilletera.read(usuarioId);
+    Movimiento m3 = new Movimiento();
+    m2.setImporte(-60);
+    m2.setFechaMovimiento(new Date());   
+    m2.setConceptoOperacion("Pagos"); 
+    m2.setEstado(1);
+    m2.setTipoOperacion("Deposito");
+    m2.setDetalle("Pago");
+    m2.setDeUsuario(u.getUsuarioId());
+    m2.setaUsuario(u.getUsuarioId());
+    m2.setCuentaDestino(b2.getCuentas().get(0).getIdcuenta());
+    m2.setCuentaOrigen(b3.getCuentas().get(0).getIdcuenta());
+
+    m3.setImporte(+60);
+    m3.setFechaMovimiento(new Date());
+    m3.setConceptoOperacion("Deposito");
+    m3.setEstado(2);
+    m3.setTipoOperacion("Transferencia");
+    m3.setDetalle("Sueldo");
+    m3.setDeUsuario(u.getUsuarioId());
+    m3.setaUsuario(u.getUsuarioId());
+    m3.setCuentaDestino(b2.getCuentas().get(0).getIdcuenta());
+    m3.setCuentaOrigen(b3.getCuentas().get(0).getIdcuenta());
+
+    
+    
+    b2.agregarMovimiento(m2); 
+    ABMBilletera.update(b2);
+    b3.agregarMovimiento(m3);
+    ABMBilletera.update(b3);
+
     }
 }

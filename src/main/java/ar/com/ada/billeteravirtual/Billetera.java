@@ -3,6 +3,9 @@ package ar.com.ada.billeteravirtual;
 import java.util.*;
 
 import javax.persistence.*;
+
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 /**
  * Billetera
  */
@@ -21,7 +24,8 @@ public class Billetera {
     private Persona persona;
 
     @OneToMany (mappedBy = "billetera", cascade = CascadeType.ALL)
-    private List<Cuenta> cuentas = new ArrayList<Cuenta>();
+    @LazyCollection(LazyCollectionOption.FALSE)
+     private List<Cuenta> cuentas = new ArrayList<Cuenta>();
 
 	public void setPersona(Persona p) {
         this.persona = p;
@@ -42,11 +46,12 @@ public class Billetera {
     }
 
     public void agregarMovimiento(Movimiento m) {
-
+      
         this.cuentas.get(0).agregarMovimiento(m);
+         
     }
 
-        public void detallesDeMovimiento(Movimiento m, double importe, Cuenta c, Usuario u) {
+        public void movimientoInicial(Movimiento m, double importe, Cuenta c, Usuario u) {
         m.setImporte(importe);
         m.setFechaMovimiento(new Date());   
         m.setConceptoOperacion("Pagos"); 
@@ -57,8 +62,20 @@ public class Billetera {
         m.setaUsuario(u.getUsuarioId());
         m.setCuentaDestino(this.cuentas.get(0).getIdcuenta());
         m.setCuentaOrigen(this.cuentas.get(0).getIdcuenta());
-        
-        
-    } 
+               
+    }
 
+    public Persona getPersona() {
+        return persona;
+    }
+
+    public List<Cuenta> getCuentas() {
+        return cuentas;
+    }
+
+    public void setCuentas(List<Cuenta> cuentas) {
+        this.cuentas = cuentas;
+    }
+
+    
 }

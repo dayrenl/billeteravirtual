@@ -24,6 +24,7 @@ public class Persona {
 
     @OneToOne (mappedBy = "persona", cascade = CascadeType.ALL) 
     private Billetera billetera;
+	
 
     public Persona(String nombre, String dni, int edad, String email) {
         this.nombre = nombre;
